@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/profesion")
 public class ProfesionControllerV1 {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ProfesionControllerV1 {
 
     @ResponseBody
     @GetMapping(path = "/{database}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProfesionResponse> personas(@PathVariable String database) {
+    public List<ProfesionResponse> profesiones(@PathVariable String database) {
         log.info("Into profesion REST API");
         return profesionInputAdapterRest.historial(database.toUpperCase());
     }

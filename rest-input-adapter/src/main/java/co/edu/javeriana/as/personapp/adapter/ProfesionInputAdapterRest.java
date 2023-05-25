@@ -25,11 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfesionInputAdapterRest {
 
     @Autowired
-    @Qualifier("profesionOutputAdapterMaria")
+    @Qualifier("professionOutputAdapterMaria")
     private ProfessionOutputPort professionOutputPortMaria;
 
     @Autowired
-    @Qualifier("profesionOutputAdapterMongo")
+    @Qualifier("professionOutputAdapterMongo")
     private ProfessionOutputPort professionOutputPortMongo;
 
     @Autowired
