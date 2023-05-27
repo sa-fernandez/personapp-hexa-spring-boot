@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.checkerframework.checker.units.qual.s;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -125,7 +124,7 @@ public class EstudiosInputAdapterRest {
     }
 
     public Boolean eliminarEstudios(String database, String idProf, String ccPer) {
-        log.info("Into eliminarEstudios EstuidosEntity in Input Adapter");
+        log.info("Into eliminarEstudios EstudiosEntity in Input Adapter");
         try {
             setPersonOutputPortInjection(database);
             return studyInputPort.drop(Integer.parseInt(idProf), Integer.parseInt(ccPer));

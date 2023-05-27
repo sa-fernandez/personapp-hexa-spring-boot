@@ -2,12 +2,14 @@ package co.edu.javeriana.as.personapp.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.model.request.EstudiosRequest;
 import co.edu.javeriana.as.personapp.model.response.EstudiosResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Mapper
 public class EstudiosMapperRest {
 
     @Autowired
