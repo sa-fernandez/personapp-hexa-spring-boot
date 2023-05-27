@@ -32,26 +32,26 @@ public class TelefonoInputAdapterRest {
 	@Qualifier("personOutputAdapterMaria")
 	private PersonOutputPort personOutputPortMaria;
 
-    @Autowired
-    @Qualifier("phoneOutputAdapterMaria")
-    private PhoneOutputPort phoneOutputPortMaria;
+	@Autowired
+	@Qualifier("phoneOutputAdapterMaria")
+	private PhoneOutputPort phoneOutputPortMaria;
 
 	@Autowired
 	@Qualifier("personOutputAdapterMongo")
 	private PersonOutputPort personOutputPortMongo;
 
-    @Autowired
-    @Qualifier("phoneOutputAdapterMongo")
-    private PhoneOutputPort phoneOutputPortMongo;
-    
-    @Autowired
-    private TelefonoMapperRest telefonoMapperRest;
+	@Autowired
+	@Qualifier("phoneOutputAdapterMongo")
+	private PhoneOutputPort phoneOutputPortMongo;
+
+	@Autowired
+	private TelefonoMapperRest telefonoMapperRest;
 
 	PersonInputPort personInputPort;
 
-    PhoneInputPort phoneInputPort;
+	PhoneInputPort phoneInputPort;
 
-    private String setPhoneOutputPortInjection(String dbOption) throws InvalidOptionException {
+	private String setPhoneOutputPortInjection(String dbOption) throws InvalidOptionException {
 		if (dbOption.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
 			personInputPort = new PersonUseCase(personOutputPortMaria);
 			phoneInputPort = new PhoneUseCase(phoneOutputPortMaria);
@@ -59,23 +59,23 @@ public class TelefonoInputAdapterRest {
 		} else if (dbOption.equalsIgnoreCase(DatabaseOption.MONGO.toString())) {
 			personInputPort = new PersonUseCase(personOutputPortMongo);
 			phoneInputPort = new PhoneUseCase(phoneOutputPortMongo);
-			return  DatabaseOption.MONGO.toString();
+			return DatabaseOption.MONGO.toString();
 		} else {
 			throw new InvalidOptionException("Invalid database option: " + dbOption);
 		}
 	}
 
-    public List<TelefonoResponse> historial(String database) {
+	public List<TelefonoResponse> historial(String database) {
 		log.info("Into historial PersonaEntity in Input Adapter");
 		try {
-			if(setPhoneOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+			if (setPhoneOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
 				return phoneInputPort.findAll().stream().map(telefonoMapperRest::fromDomainToAdapterRestMaria)
 						.collect(Collectors.toList());
-			}else {
+			} else {
 				return phoneInputPort.findAll().stream().map(telefonoMapperRest::fromDomainToAdapterRestMongo)
 						.collect(Collectors.toList());
 			}
-			
+
 		} catch (InvalidOptionException e) {
 			log.warn(e.getMessage());
 			return new ArrayList<TelefonoResponse>();
@@ -87,9 +87,9 @@ public class TelefonoInputAdapterRest {
 			String database = setPhoneOutputPortInjection(request.getDatabase());
 			Person person = personInputPort.findOne(Integer.valueOf(request.getOwnerId()));
 			Phone phone = phoneInputPort.create(telefonoMapperRest.fromAdapterToDomain(request, person));
-			if(database.equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+			if (database.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
 				return telefonoMapperRest.fromDomainToAdapterRestMaria(phone);
-			}else {
+			} else {
 				return telefonoMapperRest.fromDomainToAdapterRestMongo(phone);
 			}
 		} catch (InvalidOptionException e) {
@@ -107,9 +107,9 @@ public class TelefonoInputAdapterRest {
 	public TelefonoResponse obtenerTelefono(String database, String number) {
 		log.info("Into obtenerTelefono PersonaEntity in Input Adapter");
 		try {
-			if(setPhoneOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+			if (setPhoneOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
 				return telefonoMapperRest.fromDomainToAdapterRestMaria(phoneInputPort.findOne(number));
-			}else {
+			} else {
 				return telefonoMapperRest.fromDomainToAdapterRestMongo(phoneInputPort.findOne(number));
 			}
 		} catch (InvalidOptionException e) {
@@ -120,16 +120,17 @@ public class TelefonoInputAdapterRest {
 			return new TelefonoResponse("", "", "", "", "");
 		}
 	}
-	
+
 	public TelefonoResponse editarTelefono(TelefonoRequest request) {
 		log.info("Into editarTelefono TelefonoEntity in Input Adapter");
 		try {
 			String database = setPhoneOutputPortInjection(request.getDatabase());
 			Person person = personInputPort.findOne(Integer.valueOf(request.getOwnerId()));
-			Phone phone = phoneInputPort.edit(request.getNumber(), telefonoMapperRest.fromAdapterToDomain(request, person));
-			if(database.equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+			Phone phone = phoneInputPort.edit(request.getNumber(),
+					telefonoMapperRest.fromAdapterToDomain(request, person));
+			if (database.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
 				return telefonoMapperRest.fromDomainToAdapterRestMaria(phone);
-			}else {
+			} else {
 				return telefonoMapperRest.fromDomainToAdapterRestMongo(phone);
 			}
 		} catch (InvalidOptionException e) {
