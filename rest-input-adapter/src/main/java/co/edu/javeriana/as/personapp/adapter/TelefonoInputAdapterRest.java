@@ -12,6 +12,7 @@ import co.edu.javeriana.as.personapp.application.port.out.PhoneOutputPort;
 import co.edu.javeriana.as.personapp.application.usecase.PhoneUseCase;
 import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.domain.Phone;
 import co.edu.javeriana.as.personapp.mapper.TelefonoMapperRest;
@@ -77,6 +78,59 @@ public class TelefonoInputAdapterRest {
 		} catch (InvalidOptionException e) {
 			log.warn(e.getMessage());
 			return new TelefonoResponse("", "", null, "", "");
+		}
+	}
+
+	public TelefonoResponse obtenerTelefono(String database, String number) {
+		log.info("Into obtenerTelefono PersonaEntity in Input Adapter");
+		try {
+			if(setPersonOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+				return telefonoMapperRest.fromDomainToAdapterRestMaria(phoneInputPort.findOne(number));
+			}else {
+				return telefonoMapperRest.fromDomainToAdapterRestMongo(phoneInputPort.findOne(number));
+			}
+		} catch (InvalidOptionException e) {
+			log.warn(e.getMessage());
+			return new TelefonoResponse("", "", null, "", "");
+		} catch (NoExistException e) {
+			log.warn(e.getMessage());
+			return new TelefonoResponse("", "", null, "", "");
+		}
+	}
+	
+	public TelefonoResponse editarTelefono(TelefonoRequest request) {
+		log.info("Into editarTelefono TelefonoEntity in Input Adapter");
+		try {
+			String database = setPersonOutputPortInjection(request.getDatabase());
+			Phone phone = phoneInputPort.edit(request.getNumber(), telefonoMapperRest.fromAdapterToDomain(request));
+			if(database.equalsIgnoreCase(DatabaseOption.MARIA.toString())){
+				return telefonoMapperRest.fromDomainToAdapterRestMaria(phone);
+			}else {
+				return telefonoMapperRest.fromDomainToAdapterRestMongo(phone);
+			}
+		} catch (InvalidOptionException e) {
+			log.warn(e.getMessage());
+			return new TelefonoResponse("", "", null, "", "");
+		} catch (NumberFormatException e) {
+			log.warn(e.getMessage());
+			return new TelefonoResponse("", "", null, "", "");
+		} catch (NoExistException e) {
+			log.warn(e.getMessage());
+			return new TelefonoResponse("", "", null, "", "");
+		}
+	}
+
+	public Boolean eliminarTelefono(String database, String number) {
+		log.info("Into eliminarTelefono TelefonoEntity in Input Adapter");
+		try {
+			setPersonOutputPortInjection(database);
+			return phoneInputPort.drop(number);
+		} catch (InvalidOptionException e) {
+			log.warn(e.getMessage());
+			return false;
+		} catch (NoExistException e) {
+			log.warn(e.getMessage());
+			return false;
 		}
 	}
 
