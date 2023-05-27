@@ -37,7 +37,7 @@ public class EstudiosInputAdapterRest {
 
     StudyInputPort studyInputPort;
 
-    private String setPersonOutputPortInjection(String dbOption) throws InvalidOptionException {
+    private String setStudyOutputPortInjection(String dbOption) throws InvalidOptionException {
         if (dbOption.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
             studyInputPort = new StudyUseCase(studyOutputPortMaria);
             return DatabaseOption.MARIA.toString();
@@ -52,7 +52,7 @@ public class EstudiosInputAdapterRest {
     public List<EstudiosResponse> historial(String database) {
         log.info("Into historial EstudiosEntity in Input Adapter");
         try {
-            if (setPersonOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
+            if (setStudyOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
                 return studyInputPort.findAll().stream().map(estudiosMapperRest::fromDomainToAdapterRestMaria)
                         .collect(Collectors.toList());
             } else {
@@ -68,7 +68,7 @@ public class EstudiosInputAdapterRest {
 
     public EstudiosResponse crearEstudios(EstudiosRequest request) {
         try {
-            String database = setPersonOutputPortInjection(request.getDatabase());
+            String database = setStudyOutputPortInjection(request.getDatabase());
             Study study = studyInputPort.create(estudiosMapperRest.fromAdapterToDomain(request));
             if (database.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
                 return estudiosMapperRest.fromDomainToAdapterRestMaria(study);
@@ -84,7 +84,7 @@ public class EstudiosInputAdapterRest {
     public EstudiosResponse obtenerEstudios(String database, String idProf, String ccPer) {
         log.info("Into obtenerEstudios EstudiosEntity in Input Adapter");
         try {
-            if (setPersonOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
+            if (setStudyOutputPortInjection(database).equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
                 return estudiosMapperRest.fromDomainToAdapterRestMaria(
                         studyInputPort.findOne(Integer.parseInt(idProf), Integer.parseInt(ccPer)));
             } else {
@@ -103,7 +103,7 @@ public class EstudiosInputAdapterRest {
     public EstudiosResponse editarEstudios(EstudiosRequest request) {
         log.info("Into editarEstudios EstudiosEntity in Input Adapter");
         try {
-            String database = setPersonOutputPortInjection(request.getDatabase());
+            String database = setStudyOutputPortInjection(request.getDatabase());
             Study phone = studyInputPort.edit(Integer.parseInt(request.getProfession().getIdentification()),
                     Integer.parseInt(request.getPerson().getDni()), estudiosMapperRest.fromAdapterToDomain(request));
             if (database.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
@@ -126,7 +126,7 @@ public class EstudiosInputAdapterRest {
     public Boolean eliminarEstudios(String database, String idProf, String ccPer) {
         log.info("Into eliminarEstudios EstudiosEntity in Input Adapter");
         try {
-            setPersonOutputPortInjection(database);
+            setStudyOutputPortInjection(database);
             return studyInputPort.drop(Integer.parseInt(idProf), Integer.parseInt(ccPer));
         } catch (InvalidOptionException e) {
             log.warn(e.getMessage());
