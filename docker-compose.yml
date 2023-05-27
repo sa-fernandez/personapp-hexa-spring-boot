@@ -18,6 +18,8 @@ services:
     restart: always
     ports:
       - "3307:3306"
+    volumes:
+      - ./db/maria:/var/lib/mysql:rw
     networks:
       - lab-net-2
 
@@ -28,6 +30,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
+      - ./db/mongo:/data/db:rw
       - ./scripts/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - lab-net-2

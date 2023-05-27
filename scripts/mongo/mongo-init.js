@@ -4,14 +4,14 @@ db.createUser({
   user: "persona_db",
   pwd: "persona_db",
   roles: [
-    { role: "read", db: "prueba_db" },
-    { role: "readWrite", db: "prueba_db" },
-    { role: "dbAdmin", db: "prueba_db" }
+    { role: "read", db: "persona_db" },
+    { role: "readWrite", db: "persona_db" },
+    { role: "dbAdmin", db: "persona_db" }
   ],
   mechanisms: ["SCRAM-SHA-1","SCRAM-SHA-256"]
 })
 
-db = db.getSiblingDB("prueba_db")
+db = db.getSiblingDB("persona_db")
 
 db.persona.insertMany([
   {
