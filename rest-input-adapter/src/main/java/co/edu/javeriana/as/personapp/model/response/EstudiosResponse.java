@@ -8,9 +8,9 @@ public class EstudiosResponse extends EstudiosRequest {
 
     private String status;
 
-    public EstudiosResponse(PersonaRequest person, ProfesionRequest profession, String graduationDate,
-            String universityName, String database, String status) {
-        super(person, profession, graduationDate, universityName, database);
+    public EstudiosResponse(String personCC, String professionId, String graduationDate, String universityName,
+            String database, String status) {
+        super(personCC, professionId, graduationDate, universityName, database);
         this.status = status;
     }
 

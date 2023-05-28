@@ -3,6 +3,8 @@ package co.edu.javeriana.as.personapp.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
+import co.edu.javeriana.as.personapp.domain.Person;
+import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.model.request.EstudiosRequest;
 import co.edu.javeriana.as.personapp.model.response.EstudiosResponse;
@@ -28,18 +30,18 @@ public class EstudiosMapperRest {
 
     public EstudiosResponse fromDomainToAdapterRest(Study study, String database) {
         return new EstudiosResponse(
-                personaMapperRest.fromDomainToAdapterRest(study.getPerson(), database),
-                profesionMapperRest.fromDomainToAdapterRest(study.getProfession(), database),
+                study.getPerson().getIdentification() + "",
+                study.getProfession().getIdentification() + "",
                 study.getGraduationDate() + "",
                 study.getUniversityName(),
                 database,
                 "OK");
     }
 
-    public Study fromAdapterToDomain(EstudiosRequest request) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-        return new Study(personaMapperRest.fromAdapterToDomain(request.getPerson()),
-                profesionMapperRest.fromAdapterToDomain(request.getProfession()),
+    public Study fromAdapterToDomain(EstudiosRequest request, Person person, Profession profession) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return new Study(person,
+                profession,
                 LocalDate.parse(request.getGraduationDate(), formatter), request.getUniversityName());
     }
 
