@@ -16,6 +16,7 @@ Antes de ejecutar este proyecto, asegúrate de tener instalados Maven, Docker y 
 
 ## Instrucciones de ejecución
 - Para acceder al API REST, inicie el proyecto relacionado con `rest-input-adapter`. Posterior a esto, acceder en su navegador de preferencia al enlace `http://localhost:3000` o `http://127.0.0.1:3000` para visualizar la aplicación en ejecución. 
+- Para acceder a la interfaz por CLI, inicie el proyecto relacionado con `cli-input-adapter`. Posterior a esto, podrá visualizar todas las opciones de funcionalidad de la aplicación desde la terminal de comandos. 
 
 ## Licencia
 
