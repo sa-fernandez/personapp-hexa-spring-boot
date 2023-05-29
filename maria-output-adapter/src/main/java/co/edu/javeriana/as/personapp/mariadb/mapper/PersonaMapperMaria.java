@@ -47,7 +47,8 @@ public class PersonaMapperMaria {
 
 	private List<EstudiosEntity> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty()
-				? studies.stream().map(study -> estudiosMapperMaria.fromDomainToAdapter(study)).collect(Collectors.toList())
+				? studies.stream().map(study -> estudiosMapperMaria.fromDomainToAdapter(study))
+						.collect(Collectors.toList())
 				: new ArrayList<EstudiosEntity>();
 	}
 
@@ -64,8 +65,8 @@ public class PersonaMapperMaria {
 		person.setLastName(personaEntity.getApellido());
 		person.setGender(validateGender(personaEntity.getGenero()));
 		person.setAge(validateAge(personaEntity.getEdad()));
-		person.setStudies(validateStudies(personaEntity.getEstudios()));
-		person.setPhoneNumbers(validatePhones(personaEntity.getTelefonos()));
+		// person.setStudies(validateStudies(personaEntity.getEstudios()));
+		// person.setPhoneNumbers(validatePhones(personaEntity.getTelefonos()));
 		return person;
 	}
 

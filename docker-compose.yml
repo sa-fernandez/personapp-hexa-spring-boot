@@ -1,0 +1,36 @@
+version: '3.9'
+
+networks:
+  lab-net-2:
+    name: lab-net-2
+    driver: bridge
+
+services:
+  maria-data:
+    build: ./scripts/maria-db
+    container_name: maria
+    image: maria
+    environment:
+      MARIADB_ROOT_PASSWORD: arqsoft14*A
+      MARIADB_USER: lab2-user
+      MARIADB_PASSWORD: sebaspipfer14*A
+      MARIADB_DATABASE: prueba_db
+    restart: always
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db/maria:/var/lib/mysql:rw
+    networks:
+      - lab-net-2
+
+  mongo-data:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db/mongo:/data/db:rw
+      - ./scripts/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - lab-net-2
