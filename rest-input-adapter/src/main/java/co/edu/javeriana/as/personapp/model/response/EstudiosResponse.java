@@ -1,8 +1,6 @@
 package co.edu.javeriana.as.personapp.model.response;
 
 import co.edu.javeriana.as.personapp.model.request.EstudiosRequest;
-import co.edu.javeriana.as.personapp.model.request.PersonaRequest;
-import co.edu.javeriana.as.personapp.model.request.ProfesionRequest;
 
 public class EstudiosResponse extends EstudiosRequest {
 

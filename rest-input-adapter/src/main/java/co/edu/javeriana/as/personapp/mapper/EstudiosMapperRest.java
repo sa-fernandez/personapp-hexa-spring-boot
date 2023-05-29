@@ -1,7 +1,5 @@
 package co.edu.javeriana.as.personapp.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.domain.Profession;
@@ -13,12 +11,6 @@ import java.time.format.DateTimeFormatter;
 
 @Mapper
 public class EstudiosMapperRest {
-
-    @Autowired
-    private PersonaMapperRest personaMapperRest;
-
-    @Autowired
-    private ProfesionMapperRest profesionMapperRest;
 
     public EstudiosResponse fromDomainToAdapterRestMaria(Study study) {
         return fromDomainToAdapterRest(study, "MariaDB");
