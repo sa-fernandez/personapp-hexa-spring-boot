@@ -10,13 +10,13 @@ import co.edu.javeriana.as.personapp.terminal.model.EstudiosModelCli;
 public class EstudiosMapperCli {
 
     public EstudiosModelCli fromDomainToAdapterCli(Study study) {
-		EstudiosModelCli estudiosModelCli = new EstudiosModelCli();
+        EstudiosModelCli estudiosModelCli = new EstudiosModelCli();
         estudiosModelCli.setDuenioId(study.getPerson().getIdentification());
         estudiosModelCli.setProfesionId(study.getProfession().getIdentification());
         estudiosModelCli.setFechaGraduacion(study.getGraduationDate());
         estudiosModelCli.setUniversidad(study.getUniversityName());
-		return estudiosModelCli;
-	}
+        return estudiosModelCli;
+    }
 
     public Study fromAdapterToDomain(EstudiosModelCli estudiosModelCli, Person person, Profession profession) {
         Study study = new Study();
@@ -26,5 +26,5 @@ public class EstudiosMapperCli {
         study.setUniversityName(estudiosModelCli.getUniversidad());
         return study;
     }
-    
+
 }

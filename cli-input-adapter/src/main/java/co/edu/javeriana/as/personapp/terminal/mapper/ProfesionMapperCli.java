@@ -6,20 +6,20 @@ import co.edu.javeriana.as.personapp.terminal.model.ProfesionModelCli;
 
 @Mapper
 public class ProfesionMapperCli {
-    
+
     public ProfesionModelCli fromDomainToAdapterCli(Profession profession) {
-		ProfesionModelCli profesionModelCli = new ProfesionModelCli();
+        ProfesionModelCli profesionModelCli = new ProfesionModelCli();
         profesionModelCli.setIdententificacion(profession.getIdentification());
         profesionModelCli.setNombre(profession.getName());
         profesionModelCli.setDescripcion(profession.getDescription());
-		return profesionModelCli;
-	}
+        return profesionModelCli;
+    }
 
     public Profession fromAdapterToDomain(ProfesionModelCli profesionModelCli) {
         Profession profession = new Profession();
-        profesionModelCli.setIdententificacion(profesionModelCli.getIdententificacion());
+        profession.setIdentification(profesionModelCli.getIdententificacion());
         profession.setName(profesionModelCli.getNombre());
-        profesionModelCli.setDescripcion(profesionModelCli.getDescripcion());
+        profession.setDescription(profesionModelCli.getDescripcion());
         return profession;
     }
 

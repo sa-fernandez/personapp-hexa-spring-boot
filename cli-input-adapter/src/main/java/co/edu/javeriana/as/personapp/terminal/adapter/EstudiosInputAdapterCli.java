@@ -97,12 +97,12 @@ public class EstudiosInputAdapterCli {
         try {
             System.out.println(studyInputPort.findOne(idProf, ccPer));
         } catch (Exception e) {
-            System.out.println("La carrera de la persona con cédula " + ccPer + " y el id de profesión + " + idProf
+            System.out.println("La carrera de la persona con cédula " + ccPer + " y el id de profesión " + idProf
                     + "no existe en el sistema");
         }
     }
 
-    public void editarPersona(EstudiosModelCli estudiosModelCli) {
+    public void editarEstudios(EstudiosModelCli estudiosModelCli) {
         try {
             Person person = personInputPort.findOne(estudiosModelCli.getDuenioId());
             Profession profession = professionInputPort.findOne(estudiosModelCli.getProfesionId());
@@ -115,10 +115,11 @@ public class EstudiosInputAdapterCli {
         }
     }
 
-    public void eliminarTelefono(Integer idProf, Integer ccPer) {
+    public void eliminarEstudios(Integer idProf, Integer ccPer) {
         try {
             studyInputPort.drop(idProf, ccPer);
-            System.out.println("Carrera de la persona con cédula " + ccPer + " y el id de profesión " + idProf + " ha sido eliminada");
+            System.out.println("Carrera de la persona con cédula " + ccPer + " y el id de profesión " + idProf
+                    + " ha sido eliminada");
         } catch (Exception e) {
             System.out.println("La carrera no ha podido ser eliminada");
         }
